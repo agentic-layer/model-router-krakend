@@ -19,7 +19,7 @@ RUN go get -t ./...
 # plugins are loaded in alphabetical order
 RUN go build -buildmode=plugin -o echo.so ./plugin/echo
 
-FROM distroless/base-debian12
+FROM gcr.io/distroless/base-debian12
 ARG KRAKENX_VERSION
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
@@ -35,4 +35,4 @@ VOLUME [ "/etc/krakend" ]
 WORKDIR /etc/krakend
 ENTRYPOINT [ "/usr/bin/krakend" ]
 CMD [ "run", "-c", "/etc/krakend/krakend.json" ]
-EXPOSE 8000 8090
+EXPOSE 8080 8090

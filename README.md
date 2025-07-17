@@ -9,7 +9,7 @@ This is a KrakenD based LLM model router implementation. This is an egress API g
 docker build -t agentic-layer/model-router-krakend .
 
 # Run the container with required environment variables
-docker run -p 10000:10000 -e OPENAI_API_KEY=your_key_here agentic-layer/model-router-krakend
+docker run -p 8080:8080 -e OPENAI_API_KEY=your_key_here agentic-layer/model-router-krakend
 ```
 
 ## Deployment
