@@ -1,3 +1,6 @@
+-include .env
+export
+
 VERSION=$(shell git describe --tags --always --first-parent)
 
 .PHONY: help clean plugins test image up
@@ -5,10 +8,13 @@ VERSION=$(shell git describe --tags --always --first-parent)
 help:
 	@echo "Supported make targets (you can set the version in the Makefile):"
 	@echo ""
+	@echo "     clean   clean up build artifacts"
 	@echo "   plugins   build and test all plugins"
 	@echo "     image   build docker image and tag as latest and $(VERSION)"
-	@echo "        up   build and start in local docker"
+	@echo "       run   build and start in local docker"
 	@echo ""
+
+.DEFAULT_GOAL := help
 
 clean:
 	rm -rf build
@@ -24,10 +30,9 @@ image:
 	docker build \
 		--no-cache \
 		--platform linux/amd64 \
-		--build-arg GATEWAY_VERSION=$(VERSION) \
 		--tag model-router-krakend:$(VERSION) \
 		.
 	docker tag model-router-krakend:$(VERSION) model-router-krakend:latest
 
 up:
-	docker compose up --build -d
+	docker run -p 8080:8080 -p 8090:8090 -e OPENAI_API_KEY=$(OPENAI_API_KEY) model-router-krakend:latest
