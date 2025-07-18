@@ -28,11 +28,10 @@ test:
 image:
 	@echo VERSION=$(VERSION)
 	docker build \
-		--no-cache \
 		--platform linux/amd64 \
 		--tag model-router-krakend:$(VERSION) \
 		.
 	docker tag model-router-krakend:$(VERSION) model-router-krakend:latest
 
-up:
+run: image
 	docker run -p 8080:8080 -p 8090:8090 -e OPENAI_API_KEY=$(OPENAI_API_KEY) model-router-krakend:latest
