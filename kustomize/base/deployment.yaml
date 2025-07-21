@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-router-krakend
+  namespace: default
+  labels:
+    app: model-router-krakend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-router-krakend
+  template:
+    metadata:
+      labels:
+        app: model-router-krakend
+    spec:
+      containers:
+      - name: model-router
+        image: ghcr.io/agentic-layer/model-router-krakend:main
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: healthz
+          containerPort: 8090
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "500m"
+        envFrom:
+        - secretRef:
+            name: openai-api-key
