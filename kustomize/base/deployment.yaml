@@ -34,3 +34,10 @@ spec:
         envFrom:
         - secretRef:
             name: openai-api-key
+        volumeMounts:
+        - name: krakend-config-volume
+          mountPath: /etc/krakend
+      volumes:
+      - name: krakend-config-volume
+        configMap:
+          name: krakend-config

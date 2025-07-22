@@ -1,0 +1,88 @@
+{
+    "$id": "https://www.krakend.io/schema/v3.json",
+    "version": 3,
+    "plugin": {
+        "pattern": ".so",
+        "folder": "/unleash/tentacles/"
+    },
+    "port": 8080,
+    "extra_config": {
+        "plugin/http-server": {
+            "@comment_name": "Name order defines handler order. Last entry is outermost/first handler.",
+            "name": [
+                "echo"
+            ]
+        },
+        "router": {
+            "disable_access_log": true,
+            "hide_version_header": true
+        }
+    },
+    "timeout": "10000ms",
+    "cache_ttl": "300s",
+    "output_encoding": "json",
+    "name": "model-router-krakend",
+    "endpoints": [
+        {
+            "endpoint": "/api/whoami",
+            "output_encoding": "no-op",
+            "input_query_strings": [
+                "*"
+            ],
+            "input_headers": [
+                "*"
+            ],
+            "backend": [
+                {
+                    "encoding": "no-op",
+                    "host": [
+                        "whoami:80"
+                    ],
+                    "url_pattern": "/"
+                }
+            ]
+        },
+        {
+            "endpoint": "/api/whoami/{vin}",
+            "output_encoding": "no-op",
+            "input_query_strings": [
+                "*"
+            ],
+            "input_headers": [
+                "*"
+            ],
+            "backend": [
+                {
+                    "encoding": "no-op",
+                    "host": [
+                        "whoami:80"
+                    ],
+                    "url_pattern": "/{vin}"
+                }
+            ]
+        },
+        {
+            "endpoint": "/test/version",
+            "output_encoding": "no-op",
+            "backend": [
+                {
+                    "encoding": "no-op",
+                    "host": [
+                        "https://localhost:8080"
+                    ],
+                    "url_pattern": "/version",
+                    "extra_config": {
+                        "plugin/http-client": {
+                            "name": "http-client",
+                            "http-client": {
+                                "client_tls": {
+                                    "allow_insecure_connections": true
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
