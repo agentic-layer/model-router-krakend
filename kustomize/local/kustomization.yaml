@@ -4,3 +4,9 @@ kind: Kustomization
 resources:
 - ../base/
 - ingress.yaml
+
+configMapGenerator:
+- name: krakend-config
+  behavior: replace
+  files:
+  - krakend.json

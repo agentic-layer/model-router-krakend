@@ -29,10 +29,11 @@ COPY --from=builder /maelstrom/*.so /unleash/tentacles/
 ENV KRAKENX_VERSION="$KRAKENX_VERSION"
 ENV GIN_MODE="release"
 ENV USAGE_DISABLE=1
+ENV FC_ENABLE=1
 
 USER 1000
 VOLUME [ "/etc/krakend" ]
 WORKDIR /etc/krakend
 ENTRYPOINT [ "/usr/bin/krakend" ]
 CMD [ "run", "-c", "/etc/krakend/krakend.json" ]
-EXPOSE 8080 8090
+EXPOSE 8080 9090

@@ -1,6 +1,6 @@
 # KrakenD based LLM model router
 
-This is a KrakenD based LLM model router implementation. This is an egress API gateway meant to route between different LLM providers, such as OpenAI or Gemini.
+This is a [KrakenD](https://www.krakend.io/docs/ai-gateway/) based LLM model router implementation. This is an egress API gateway meant to route between different LLM providers, such as OpenAI or Gemini.
 
 ### Building and Running
 
@@ -9,19 +9,20 @@ This is a KrakenD based LLM model router implementation. This is an egress API g
 docker build -t agentic-layer/model-router-krakend .
 
 # Run the container with required environment variables
-docker run -p 8080:8080 -e OPENAI_API_KEY=your_key_here agentic-layer/model-router-krakend
+docker run -p 8080:8080 -e OPENAI_API_KEY=$OPENAI_API_KEY agentic-layer/model-router-krakend
 ```
 
 ## Deployment
 
 ```bash
-# in order for the proxy to work we have to manually create a Kubernetes secret
+# in order for the proxy to work we have to manually create a Kubernetes secrets
 # that contains an OPENAI_API_KEY environment variable
+# that contains an ANTHROPIC_API_KEY environment variable
 kubectl create secret generic openai-api-key --from-literal=OPENAI_API_KEY=$OPENAI_API_KEY
 kubectl apply -k kustomize/local/
 
 # to test the proxy, issue the following curl command
-curl http://krakend.127.0.0.1.sslip.io/v1/chat/completions \
+curl http://krakend.127.0.0.1.sslip.io/llm/openai \
   -H "Content-Type: application/json" \
   -d '{
      "model": "gpt-4o-mini",

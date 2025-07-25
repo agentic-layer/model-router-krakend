@@ -14,7 +14,7 @@
             ]
         },
         "router": {
-            "disable_access_log": true,
+            "disable_access_log": false,
             "hide_version_header": true
         }
     },
@@ -22,67 +22,6 @@
     "cache_ttl": "300s",
     "output_encoding": "json",
     "name": "model-router-krakend",
-    "endpoints": [
-        {
-            "endpoint": "/api/whoami",
-            "output_encoding": "no-op",
-            "input_query_strings": [
-                "*"
-            ],
-            "input_headers": [
-                "*"
-            ],
-            "backend": [
-                {
-                    "encoding": "no-op",
-                    "host": [
-                        "whoami:80"
-                    ],
-                    "url_pattern": "/"
-                }
-            ]
-        },
-        {
-            "endpoint": "/api/whoami/{vin}",
-            "output_encoding": "no-op",
-            "input_query_strings": [
-                "*"
-            ],
-            "input_headers": [
-                "*"
-            ],
-            "backend": [
-                {
-                    "encoding": "no-op",
-                    "host": [
-                        "whoami:80"
-                    ],
-                    "url_pattern": "/{vin}"
-                }
-            ]
-        },
-        {
-            "endpoint": "/test/version",
-            "output_encoding": "no-op",
-            "backend": [
-                {
-                    "encoding": "no-op",
-                    "host": [
-                        "https://localhost:8080"
-                    ],
-                    "url_pattern": "/version",
-                    "extra_config": {
-                        "plugin/http-client": {
-                            "name": "http-client",
-                            "http-client": {
-                                "client_tls": {
-                                    "allow_insecure_connections": true
-                                }
-                            }
-                        }
-                    }
-                }
-            ]
-        }
+    "endpoints": [        
     ]
 }

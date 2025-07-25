@@ -1,0 +1,51 @@
+{
+    "$schema": "https://www.krakend.io/schema/v2.10/krakend.json",
+    "version": 3,
+    "plugin": {
+        "pattern": ".so",
+        "folder": "/unleash/tentacles/"
+    },
+    "port": 8080,
+    "extra_config": {
+        "telemetry/logging": {
+            "level": "ERROR",
+            "syslog": false,
+            "stdout": true
+        },
+        "router": {
+            "disable_access_log": true,
+            "hide_version_header": true
+        }
+    },
+    "timeout": "10000ms",
+    "cache_ttl": "300s",
+    "output_encoding": "json",
+    "name": "model-router-krakend",
+    "echo_endpoint": true,
+    "endpoints": [
+        {
+            "endpoint": "/llm/openai",
+            "output_encoding": "no-op",
+            "method": "POST",
+            "backend": [
+                {
+                    "host": [
+                        "https://api.openai.com"
+                    ],
+                    "url_pattern": "/v1/chat/completions",
+                    "extra_config": {
+                        "modifier/martian": {
+                            "header.Modifier": {
+                                "scope": [
+                                    "request"
+                                ],
+                                "name": "Authorization",
+                                "value": "Bearer {{ env "OPENAI_API_KEY" }}"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

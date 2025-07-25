@@ -34,4 +34,4 @@ image:
 	docker tag model-router-krakend:$(VERSION) model-router-krakend:latest
 
 run: image
-	docker run -p 8080:8080 -p 8090:8090 -e OPENAI_API_KEY=$(OPENAI_API_KEY) model-router-krakend:latest
+	docker run -p 8080:8080 -p 9090:9090 -e OPENAI_API_KEY=$(OPENAI_API_KEY) model-router-krakend:latest
