@@ -5,6 +5,9 @@ This is a [KrakenD](https://www.krakend.io/docs/ai-gateway/) based LLM model rou
 ### Building and Running
 
 ```bash
+# install local development dependencies
+brew bundle --no-lock --verbose
+
 # Build the Docker image
 docker build -t agentic-layer/model-router-krakend .
 
