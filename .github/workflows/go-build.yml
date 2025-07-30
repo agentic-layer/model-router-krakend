@@ -23,7 +23,7 @@ jobs:
 
     # NOTE: golang version must match exactly the one in https://github.com/devopsfaith/krakend-ce/blob/v2.10.1/Makefile
     - name: Set up Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v5
       with:
         go-version: '1.24.4'
         cache-dependency-path: 'go/go.sum'
